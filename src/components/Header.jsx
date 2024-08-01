@@ -1,35 +1,51 @@
-import React, { useState } from "react";
-import { auth } from "../utils/firebase";
-import { signOut } from "firebase/auth";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "../utils/firebase";
+import { addUser, removeUser } from "../utils/userSlice";
 
 const Header = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
 
-  const handleMouseEnter = () => {
-    setDropdownVisible(true);
-  };
-
-  const handleMouseLeave = () => {
-    setDropdownVisible(false);
-  };
-
-  const handleSignOut = () => {
-    signOut(auth)
-      .then(() => {
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName, photoURL } = user;
+        dispatch(addUser({ uid, email, displayName, photoURL }));
+        navigate("/home");
+      } else {
+        dispatch(removeUser());
         navigate("/");
-      })
-      .catch((error) => {
-        alert("some error occured while signing out..");
-      });
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleMouseEnter = () => setDropdownVisible(true);
+  const handleMouseLeave = () => setDropdownVisible(false);
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error("Error signing out:", error);
+      alert("An error occurred while signing out. Please try again.");
+    }
   };
 
   return (
     <header className="absolute top-0 left-0 w-full bg-gradient-to-b from-black z-50 flex items-center justify-between px-5 py-2">
-      <img src="/Netflix_Logo_PMS.png" alt="Logo" className="h-12 ml-36" />
+      <img
+        src="/Netflix_Logo_PMS.png"
+        alt="Logo"
+        className="h-12 ml-36"
+        aria-label="Netflix Logo"
+      />
       {user && (
         <div className="flex items-center">
           <div className="relative">
@@ -38,7 +54,11 @@ const Header = () => {
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
-              <img src={user.photoURL} alt="User" className="h-7" />
+              <img
+                src={user.photoURL}
+                alt="User"
+                className="h-7 rounded-full"
+              />
             </div>
             {dropdownVisible && (
               <div
@@ -67,7 +87,9 @@ const Header = () => {
               </div>
             )}
           </div>
-          <p className="p-2 text-white font-bold">{user.displayName? user.displayName :"guest"}</p>
+          <p className="p-2 text-white font-bold">
+            {user.displayName || "Guest"}
+          </p>
         </div>
       )}
     </header>

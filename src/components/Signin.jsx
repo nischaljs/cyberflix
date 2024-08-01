@@ -1,16 +1,13 @@
 import React, { useState, useRef } from "react";
 import { validateLoginForm } from "../utils/siginvalidation";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import updateUserInStore from "../utils/updateUserInStore";
-import Body from "./Body";
 
 const Signin = () => {
   const [errors, setErrors] = useState({});
   const email = useRef(null);
   const password = useRef(null);
-  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,11 +19,6 @@ const Signin = () => {
       setErrors(validationErrors);
     } else {
       signInWithEmailAndPassword(auth, email.current.value, password.current.value)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          console.log(user);
-          navigate('/home');
-        })
         .catch((error) => {
           const errorCode = error.code;
           if(errorCode == "auth/invalid-credential"){

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import passowordvalidation from "../utils/passowordvalidation";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../utils/firebase";
@@ -13,7 +13,6 @@ const Signup = () => {
   const emailRef = useRef(null);
   const fullNameRef = useRef(null);
   const passwordRef = useRef(null);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleEmailSubmit = (e) => {
@@ -47,9 +46,6 @@ const Signup = () => {
                 })
               );
             })
-            .then(() => {
-              navigate("/home");
-            });
         })
         .catch((error) => {
           const errorCode = error.code;
