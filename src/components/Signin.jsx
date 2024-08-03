@@ -30,7 +30,7 @@ const Signin = () => {
   
   return (
     <div
-      className="min-h-screen flex items-center justify-center bg-cover bg-center"
+      className="min-h-screen flex items-center justify-center bg-cover bg-center md:p-0 p-3"
       style={{ backgroundImage: "url(/banner.jpg)" }}
     >
       <div className="bg-black bg-opacity-75 p-8 mt-20 rounded-lg max-w-md w-full">

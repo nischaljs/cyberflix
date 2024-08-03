@@ -57,7 +57,7 @@ const Signup = () => {
 
   return (
     <div
-      className="relative min-h-screen flex items-center justify-center bg-cover bg-center"
+      className="relative min-h-screen md:p-0 p-4 flex items-center justify-center bg-cover bg-center"
       style={{ backgroundImage: "url('/banner.jpg')" }}
     >
       <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-transparent opacity-70"></div>
@@ -88,7 +88,7 @@ const Signup = () => {
               />
               <button
                 type="submit"
-                className="bg-red-600 hover:bg-red-700 text-white text-lg font-semibold py-3 px-6"
+                className="bg-red-600 h-full p-2 hover:bg-red-700 text-white text-lg font-semibold md:py-3 md:px-6"
               >
                 Get Started
               </button>

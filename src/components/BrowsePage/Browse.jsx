@@ -4,21 +4,22 @@ import UpperTrailerPlayer from "./UpperTrailerPlayer";
 import LowerMovieRecommendations from "./LowerMovieRecommendations";
 import { useSelector } from "react-redux";
 
-
 const Browse = () => {
-useNowPlaying();
+  useNowPlaying();
 
-const movies = useSelector((store)=> (store.movies.nowPlayingMovies));
- if(!movies){
-  return
- }
+  const movies = useSelector((store) => store.movies.nowPlayingMovies);
 
+  if (!movies || movies.length === 0) {
+    return <div className="w-screen h-screen flex items-center justify-center text-white">Loading...</div>;
+  }
+
+  const randomMovie = movies[Math.floor(Math.random() * movies.length)];
 
   return (
-    <>
-      <UpperTrailerPlayer movie={movies[Math.floor(Math.random()*20)]}/>
-      <LowerMovieRecommendations/>
-    </>
+    <div className="w-screen h-auto">
+      <UpperTrailerPlayer movie={randomMovie} />
+      <LowerMovieRecommendations />
+    </div>
   );
 };
 

@@ -1,9 +1,12 @@
-import React from 'react';
-import { createBrowserRouter, RouterProvider, Outlet} from 'react-router-dom';
+import React, { Suspense, lazy } from 'react';
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Signup from './Signup';
 import Signin from './Signin';
 import Header from './Header';
-import Browse from './BrowsePage/Browse'; 
+import Browse from './BrowsePage/Browse';
+import ErrorPage from './BrowsePage/ErrorPage';
+
+const GeminiSearchPage = lazy(() => import('./BrowsePage/GeminiSearchPage'));
 
 const Body = () => {
 
@@ -16,6 +19,7 @@ const Body = () => {
           <Outlet />
         </>
       ),
+      errorElement: <ErrorPage />,
       children: [
         {
           path: '/',
@@ -29,6 +33,14 @@ const Body = () => {
           path: 'home',
           element: <Browse />,
         },
+        {
+          path: 'gemini',
+          element: (
+            <Suspense fallback={<div>Loading...</div>}>
+              <GeminiSearchPage />
+            </Suspense>
+          ),
+        }
       ],
     },
   ]);
