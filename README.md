@@ -41,3 +41,15 @@ CYBER-FLIX is a React application designed to provide users with movie recommend
 - **Redux** for state management
 - **Gemini** for movie recommendations
 
+
+![image](https://github.com/user-attachments/assets/f6b73205-3890-4a2f-b958-615fcfe74d5b)
+
+![image](https://github.com/user-attachments/assets/66c3491d-9365-448e-9b8f-ea8008dab36f)
+
+![image](https://github.com/user-attachments/assets/707e9a88-7e0e-4b02-a8cd-48ea6a0b557e)
+
+![image](https://github.com/user-attachments/assets/0f9bf22f-3aa7-4372-97f5-c42399a952e2)
+
+
+
+
